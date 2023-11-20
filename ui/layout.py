@@ -47,23 +47,23 @@ class WeatherUILayout:
         city = self.city_entry.get()
         if city:
             weather_data = {}  
-
+            pollution_data= {}
             if weather_data.get('cod') == '200':
                 # Display weather information only if the city is found
-                self.display_weather_info(weather_data)
+                self.display_weather_info(weather_data, pollution_data)
             else:
                 self.display_error_message('City not found')
         else:
             # Hide the Treeview and AQI/wind speed
             self.hide_forecast_info()
 
-    def display_weather_info(self, weather_data):
+    def display_weather_info(self, weather_data, pollution_data):
         # Display current weather
         current_weather = weather_data['list'][0]
         current_temperature = current_weather['main']['temp']
         current_description = current_weather['weather'][0]['description'].capitalize()
         current_wind_speed = current_weather['wind']['speed']
-        current_aqi = current_weather.get('aqi', 'N/A')
+        current_aqi = pollution_data['list'][0]['components']['pm2_5']
         current_icon_code = current_weather['weather'][0]['icon']
         current_icon_url = f'icons/{current_icon_code}.png'
         current_icon = Image.open(current_icon_url)

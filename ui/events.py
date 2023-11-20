@@ -14,19 +14,21 @@ class WeatherUIEvents:
     def fetch_weather(self):
         city = self.layout.city_entry.get()
         weather_data = APIManager.get_weather_data(city)
+        latitude = weather_data['city']['coord']['lat']
+        longitude = weather_data['city']['coord']['lon']
+        pollution_data = APIManager.get_pollution_data(latitude, longitude)
         if weather_data['cod'] == '200':
-            self.update_ui(weather_data)
+            self.update_ui(weather_data, pollution_data)
         else:
             self.layout.result_label.config(text='City not found')
 
-    def update_ui(self, weather_data):
+    def update_ui(self, weather_data, pollution_data):
         # Display current weather
         current_weather = weather_data['list'][0]
-        current_date = current_weather['dt_txt']
         current_temperature = current_weather['main']['temp']
         current_description = current_weather['weather'][0]['description'].capitalize()
         current_wind_speed = current_weather['wind']['speed']
-        current_aqi = current_weather.get('aqi', 'N/A')
+        current_aqi = pollution_data['list'][0]['components']['pm2_5']
         current_icon_code = current_weather['weather'][0]['icon']
         current_icon_url = f'icons/{current_icon_code}.png'
         current_icon = Image.open(current_icon_url)
@@ -48,3 +50,8 @@ class WeatherUIEvents:
 
         # Display AQI and wind speed
         self.layout.display_aqi_and_wind_speed(current_aqi, current_wind_speed)
+        
+        self.master.update_idletasks()
+        x_position = (self.master.winfo_screenwidth() - self.master.winfo_reqwidth()) // 2
+        y_position = (self.master.winfo_screenheight() - self.master.winfo_reqheight()) // 2
+        self.master.geometry(f"+{x_position}+{y_position}")
