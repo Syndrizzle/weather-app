@@ -56,13 +56,7 @@ class WeatherUILayout:
     def handle_weather_fetch(self):
         city = self.city_entry.get()
         if city:
-            weather_data = {}  
-            pollution_data= {}
-            if weather_data.get('cod') == '200':
-                # Display weather information only if the city is found
-                self.display_weather_info(weather_data, pollution_data)
-            else:
-                self.display_error_message('City not found')
+            self.layout.events.fetch_weather()
         else:
             # Hide the Treeview and AQI/wind speed
             self.hide_forecast_info()

@@ -1,8 +1,8 @@
-import tkinter as tk
 from PIL import Image, ImageTk
 from api import APIManager
 import os
 import sys
+from tkinter import messagebox
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller one-file mode """
@@ -23,13 +23,13 @@ class WeatherUIEvents:
     def fetch_weather(self):
         city = self.layout.city_entry.get()
         weather_data = APIManager.get_weather_data(city)
-        latitude = weather_data['city']['coord']['lat']
-        longitude = weather_data['city']['coord']['lon']
-        pollution_data = APIManager.get_pollution_data(latitude, longitude)
         if weather_data['cod'] == '200':
+            latitude = weather_data['city']['coord']['lat']
+            longitude = weather_data['city']['coord']['lon']
+            pollution_data = APIManager.get_pollution_data(latitude, longitude)
             self.update_ui(weather_data, pollution_data)
         else:
-            self.layout.result_label.config(text='City not found')
+            messagebox.showerror("Error", "City not found!")
 
     def update_ui(self, weather_data, pollution_data):
         # Display current weather
