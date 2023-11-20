@@ -1,9 +1,6 @@
 import tkinter as tk
-from PIL import Image, ImageTk, ImageFilter
-import requests 
-import io
+from PIL import Image, ImageTk
 from api import APIManager
-from ui.layout import WeatherUILayout
 
 class WeatherUIEvents:
     def __init__(self, master, layout):
@@ -33,7 +30,6 @@ class WeatherUIEvents:
         current_icon_url = f'icons/{current_icon_code}.png'
         current_icon = Image.open(current_icon_url)
         current_icon = current_icon.resize((100, 100), resample=Image.BICUBIC)
-        current_icon = current_icon.filter(ImageFilter.SMOOTH)
         current_icon_image = ImageTk.PhotoImage(current_icon)
 
         self.layout.display_current_weather(current_temperature, current_description, current_icon_image)

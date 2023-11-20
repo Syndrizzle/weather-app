@@ -1,7 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
-from PIL import Image, ImageTk, ImageFilter
+from PIL import Image, ImageTk, ImageFont
 from datetime import datetime
+
+font_path = 'fonts/Raleway.ttf'
+custom_font = ImageFont.truetype(font_path)  
 
 class WeatherUILayout:
     def __init__(self, master):
@@ -9,10 +12,10 @@ class WeatherUILayout:
         self.image_references = []  # Store references to ImageTk.PhotoImage objects
 
         # UI Elements
-        self.city_label = tk.Label(master, text='Enter City:', font=('Arial', 14))
+        self.city_label = tk.Label(master, text='Enter City:', font=(custom_font, 14))
         self.city_label.grid(row=0, column=0, padx=10, pady=10)
 
-        self.city_entry = tk.Entry(master, font=('Arial', 14))
+        self.city_entry = tk.Entry(master, font=(custom_font, 14))
         self.city_entry.grid(row=0, column=1, padx=10, pady=10)
 
         self.fetch_button = ttk.Button(master, text='Fetch Weather', command=self.handle_weather_fetch)
@@ -38,7 +41,7 @@ class WeatherUILayout:
         # AQI and wind speed display
         self.aqi_wind_frame = ttk.Frame(self.result_frame)
 
-        self.aqi_wind_label = tk.Label(self.aqi_wind_frame, text='', font=('Arial', 14))
+        self.aqi_wind_label = tk.Label(self.aqi_wind_frame, text='', font=(custom_font, 14))
 
         # Hide the Treeview and AQI/wind speed when not in use
         self.hide_forecast_info()
@@ -68,7 +71,6 @@ class WeatherUILayout:
         current_icon_url = f'icons/{current_icon_code}.png'
         current_icon = Image.open(current_icon_url)
         current_icon = current_icon.resize((100, 100), resample=Image.BICUBIC)
-        current_icon = current_icon.filter(ImageFilter.SMOOTH)
         current_icon_image = ImageTk.PhotoImage(current_icon)
         self.display_current_weather(current_temperature, current_description, current_icon_image)
 
@@ -87,11 +89,11 @@ class WeatherUILayout:
 
     def display_current_weather(self, temperature, description, icon_image):
         # Display temperature
-        temperature_label = tk.Label(self.current_frame, text=f'{round(temperature)}°C', font=('Arial', 40))
+        temperature_label = tk.Label(self.current_frame, text=f'{round(temperature)}°C', font=(custom_font, 40))
         temperature_label.grid(row=0, column=1, padx=10)
 
         # Display description
-        description_label = tk.Label(self.current_frame, text=description.capitalize(), font=('Arial', 14))
+        description_label = tk.Label(self.current_frame, text=description.capitalize(), font=(custom_font, 14))
         description_label.grid(row=1, column=1, padx=10)
 
         # Display icon
