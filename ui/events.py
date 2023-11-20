@@ -1,6 +1,18 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 from api import APIManager
+import os
+import sys
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller one-file mode """
+    base_path = getattr(sys, '_MEIPASS', os.path.abspath("."))
+    return os.path.join(base_path, relative_path)
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller one-file mode """
+    base_path = getattr(sys, '_MEIPASS', os.path.abspath("."))
+    return os.path.join(base_path, relative_path)
 
 class WeatherUIEvents:
     def __init__(self, master, layout):
@@ -27,7 +39,7 @@ class WeatherUIEvents:
         current_wind_speed = current_weather['wind']['speed']
         current_aqi = pollution_data['list'][0]['components']['pm2_5']
         current_icon_code = current_weather['weather'][0]['icon']
-        current_icon_url = f'icons/{current_icon_code}.png'
+        current_icon_url = resource_path(f'icons/{current_icon_code}.png')
         current_icon = Image.open(current_icon_url)
         current_icon = current_icon.resize((100, 100), resample=Image.BICUBIC)
         current_icon_image = ImageTk.PhotoImage(current_icon)

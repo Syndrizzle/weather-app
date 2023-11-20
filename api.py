@@ -1,11 +1,20 @@
 import json
 import requests
+import os
+import sys
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller one-file mode """
+    base_path = getattr(sys, '_MEIPASS', os.path.abspath("."))
+    return os.path.join(base_path, relative_path)
+
+config_path = resource_path('config.json')
 
 class APIManager:
     @staticmethod
     def get_weather_data(city):
         # Load API key from config.json
-        with open('config.json', 'r') as config_file:
+        with open(config_path, 'r') as config_file:
             config_data = json.load(config_file)
             api_key = config_data.get('api_key')
 
@@ -18,7 +27,7 @@ class APIManager:
 
     @staticmethod
     def get_pollution_data(latitude, longitude):
-        with open('config.json', 'r') as config_file:
+        with open(config_path, 'r') as config_file:
             config_data = json.load(config_file)
             api_key = config_data.get('api_key')
 

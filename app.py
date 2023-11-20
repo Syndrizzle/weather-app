@@ -3,13 +3,19 @@ from ui.layout import WeatherUILayout
 from ui.events import WeatherUIEvents
 from PIL import Image, ImageTk
 import os
+import sys
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller one-file mode """
+    base_path = getattr(sys, '_MEIPASS', os.path.abspath("."))
+    return os.path.join(base_path, relative_path)
 
 if __name__ == "__main__":
     root = ThemedTk(theme='xpnative')
     root.title('Weather App')
 
     # Set the icon for the application
-    icon_path = os.path.join(os.getcwd(), 'icons', 'launcher', 'icon.png')
+    icon_path = resource_path("icons/launcher/icon.png")
 
     # Check if the file exists before trying to set the icon
     if os.path.exists(icon_path):
