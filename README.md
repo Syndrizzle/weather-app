@@ -19,6 +19,15 @@ This was made and tested with **Python 3.12**.
   python app.py
   ```
 
+## Screenshots
+Starting Screen:  
+
+![image](https://github.com/Syndrizzle/weather-app/assets/96112833/2cf7aff8-92ab-4fb4-b161-06f392368206)  
+
+When it displays the weather:
+  
+![image](https://github.com/Syndrizzle/weather-app/assets/96112833/9602f6aa-bda1-403c-b670-094225c596e7)
+
 ## Creating an executable using PyInstaller 
 I made this compatible with pyinstaller (It was giving some problems initially), if you don't like running the `app.py` file again and again, you can create a one click executable to launch this.
 - First install pyinstaller using pip:
