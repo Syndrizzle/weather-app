@@ -64,7 +64,9 @@ class WeatherUILayout:
     def display_weather_info(self, weather_data, pollution_data):
         # Display current weather
         current_weather = weather_data['list'][0]
-        current_temperature = current_weather['main']['temp']
+        celsius = current_weather['main']['temp']
+        fahren = (celsius*(9/5))+32
+        current_temperature = fahren
         current_description = current_weather['weather'][0]['description'].capitalize()
         current_wind_speed = current_weather['wind']['speed']
         current_aqi = pollution_data['list'][0]['components']['pm2_5']
@@ -90,7 +92,7 @@ class WeatherUILayout:
 
     def display_current_weather(self, temperature, description, icon_image):
         # Display temperature
-        temperature_label = tk.Label(self.current_frame, text=f'{round(temperature)}°C', font=(custom_font, 40))
+        temperature_label = tk.Label(self.current_frame, text=f'{round(temperature)}°F', font=(custom_font, 40))
         temperature_label.grid(row=0, column=1, padx=10)
 
         # Display description

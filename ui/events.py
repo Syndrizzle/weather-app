@@ -34,7 +34,9 @@ class WeatherUIEvents:
     def update_ui(self, weather_data, pollution_data):
         # Display current weather
         current_weather = weather_data['list'][0]
-        current_temperature = current_weather['main']['temp']
+        celsius = current_weather['main']['temp']
+        fahren = (celsius*(9/5))+32
+        current_temperature = fahren
         current_description = current_weather['weather'][0]['description'].capitalize()
         current_wind_speed = current_weather['wind']['speed']
         current_aqi = pollution_data['list'][0]['components']['pm2_5']
